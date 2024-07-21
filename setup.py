@@ -38,7 +38,7 @@ try:
 except:
     # If user didn't supply location, then try pkg-config
     try:
-        for p in ['cbc','cgl','osi-clp','clp','osi','coinutils']:
+        for p in ['cbc','cgl','clp','coinutils']:
             flags = (check_output(['pkg-config', '--libs', p])
                      .strip().decode('utf-8'))
             for flag in flags.split():
@@ -72,13 +72,13 @@ if CoinDir != None:
     # We come here if user supplied the installation directory or pkg-config failed
     if operatingSystem == 'windows':
         if os.path.exists(join(CoinDir, 'lib', 'Cbc.lib')):
-            libs = ['CbcSolver', 'Cbc', 'Cgl', 'OsiClp',
-                    'Clp', 'Osi', 'CoinUtils']
+            libs = ['CbcSolver', 'Cbc', 'Cgl', 
+                    'Clp',  'CoinUtils']
         else:
-            libs = ['libCbcSolver', 'libCbc', 'libCgl', 'libOsiClp',
-                    'libClp', 'libOsi', 'libCoinUtils']
+            libs = ['libCbcSolver', 'libCbc', 'libCgl', 
+                    'libClp',  'libCoinUtils']
     else:
-        libs = ['CbcSolver', 'Cbc', 'Cgl', 'OsiClp', 'Clp', 'Osi',
+        libs = ['CbcSolver', 'Cbc', 'Cgl',  'Clp', 
                 'CoinUtils']
         
     libDirs = [join(CoinDir, 'lib')]
@@ -167,28 +167,7 @@ ext_modules += [Extension('cylp.cy.CyCglCutGeneratorBase',
                           extra_compile_args=extra_compile_args,
                           extra_link_args=extra_link_args), ]
 
-ext_modules += [Extension('cylp.cy.CyOsiCuts',
-                          sources=[
-                              join(cppFilesDir, 'IOsiCuts.cpp'),
-                              join(cythonFilesDir, 'CyOsiCuts.pyx'),
-                          ],
-                          language='c++',
-                          include_dirs=incDirs,
-                          library_dirs=libDirs,
-                          libraries=libs,
-                          extra_compile_args=extra_compile_args,
-                          extra_link_args=extra_link_args), ]
 
-ext_modules += [Extension('cylp.cy.CyOsiSolverInterface',
-                          sources=[
-                              join(cythonFilesDir, 'CyOsiSolverInterface.pyx'),
-                          ],
-                          language='c++',
-                          include_dirs=incDirs,
-                          library_dirs=libDirs,
-                          libraries=libs,
-                          extra_compile_args=extra_compile_args,
-                          extra_link_args=extra_link_args), ]
 
 ext_modules += [Extension('cylp.cy.CyCglTreeInfo',
                           sources=[
@@ -380,7 +359,6 @@ ext_modules += [Extension('cylp.cy.CyDualPivotPythonBase',
 ext_modules += [Extension('cylp.cy.CyCutGeneratorPythonBase',
                           sources=[
                               join(cppFilesDir, 'ICglCutGeneratorBase.cpp'),
-                              join(cppFilesDir, 'IOsiCuts.cpp'),
                               join(cythonFilesDir, 'CyCutGeneratorPythonBase.pyx'),
                           ],
                           language='c++',
